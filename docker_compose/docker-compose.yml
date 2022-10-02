@@ -1,0 +1,47 @@
+version: '3'
+services:
+  ssmysql_20220407:
+    image: mysql:8.0.23
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: ss_mysql_20220407
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secure_password
+    volumes:
+      - /opt/superset/mysql:/var/lib/mysql
+    networks:
+      ssnet:
+        ipv4_address: 173.28.1.1
+
+  superset_20220407:
+    image: qlands/superset:20220407
+    container_name: superset_20220407
+    environment:
+      FLASK_APP: superset
+      PYTHONPATH: '/opt/superset_env/src/superset'
+      MYSQL_HOST_NAME: 173.28.1.1
+      MYSQL_USER_NAME: root
+      MYSQL_USER_PASSWORD: my_secure_password
+      SUPERSET_ADMIN_USERNAME: admin
+      SUPERSET_ADMIN_FIRSTNAME: Carlos
+      SUPERSET_ADMIN_LASTNAME: Quiros
+      SUPERSET_ADMIN_EMAIL: admin@myserver.com
+      SUPERSET_ADMIN_PASSWORD: my_secure_password
+      SUPERSET_HOST: 173.28.1.2
+      SUPERSET_PORT: 6900
+      WAIT_HOSTS_TIMEOUT: 360
+      WAIT_HOSTS: 173.28.1.1:3306
+    volumes:
+      - /opt/superset/config:/opt/superset_config
+    ports:
+      - 6900:6900
+    networks:
+      ssnet:
+        ipv4_address: 173.28.1.2
+networks:
+  ssnet:
+     ipam:
+        driver: default
+        config:
+          - subnet: 173.28.0.0/16

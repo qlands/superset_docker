@@ -1,0 +1,1 @@
+Copy superset_config.py /opt/superset/config  before running docker. Ensure that config matches local variables
