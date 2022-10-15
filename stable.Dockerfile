@@ -24,6 +24,9 @@ RUN . ./superset_env/bin/activate && pip install wheel && pip install -r /requir
 COPY ./docker_files/run_server.sh /opt/superset_gunicorn
 COPY ./docker_files/stop_server.sh /opt/superset_gunicorn
 COPY ./docker_files/docker-entrypoint.sh /
+COPY ./docker_files/fixes/2021-09-19_14-42_b92d69a6643c_rename_csv_to_file.py /opt/superset_env/lib/python3.8/site-packages/superset/migrations/versions
+COPY ./docker_files/fixes/sql_parse.py /opt/superset_env/lib/python3.8/site-packages/superset
+
 
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.6.0/wait /wait
 RUN chmod +x /wait
