@@ -1,9 +1,9 @@
 version: '3'
 services:
-  ssmysql_20220407:
+  ssmysql_20221216:
     image: mysql:8.0.23
     command: --default-authentication-plugin=mysql_native_password
-    container_name: ss_mysql_20220407
+    container_name: ss_mysql_20221216
     cap_add:
       - SYS_NICE
     environment:
@@ -14,9 +14,9 @@ services:
       ssnet:
         ipv4_address: 173.28.1.1
 
-  superset_20220407:
-    image: qlands/superset:20220407
-    container_name: superset_20220407
+  superset_20221216:
+    image: qlands/superset:20221216
+    container_name: superset_20221216
     environment:
       FLASK_APP: superset
       PYTHONPATH: '/opt/superset_env/src/superset'
