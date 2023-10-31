@@ -1,26 +1,28 @@
 version: '3'
 services:
-  ssmysql_20221216:
+  ssmysql_20231027:
     image: mysql:8.0.23
     command: --default-authentication-plugin=mysql_native_password
-    container_name: ss_mysql_20221216
+    container_name: ss_mysql_20231027
     cap_add:
       - SYS_NICE
     environment:
       MYSQL_ROOT_PASSWORD: my_secure_password
     volumes:
       - /opt/superset/mysql:/var/lib/mysql
+      - /opt/superset/mysql-files:/var/lib/mysql-files
     networks:
       ssnet:
         ipv4_address: 173.28.1.1
 
-  superset_20221216:
-    image: qlands/superset:20221216
-    container_name: superset_20221216
+  superset_20231027:
+    image: qlands/superset:20231027
+    container_name: superset_20231027
     environment:
       FLASK_APP: superset
       PYTHONPATH: '/opt/superset_env/src/superset'
       MYSQL_HOST_NAME: 173.28.1.1
+      MYSQL_HOST_PORT: 3306
       MYSQL_USER_NAME: root
       MYSQL_USER_PASSWORD: my_secure_password
       SUPERSET_ADMIN_USERNAME: admin
@@ -34,6 +36,7 @@ services:
       WAIT_HOSTS: 173.28.1.1:3306
     volumes:
       - /opt/superset/config:/opt/superset_config
+      - /opt/superset/log:/opt/superset_log
     ports:
       - 6900:6900
     networks:

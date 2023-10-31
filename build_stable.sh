@@ -1,1 +1,1 @@
-sudo docker build --rm -t qlands/superset:20221216 -f ./stable.Dockerfile .
+sudo docker build --rm -t qlands/superset:20231027 -f ./stable.Dockerfile .
